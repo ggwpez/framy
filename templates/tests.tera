@@ -1,0 +1,19 @@
+{{ pallet.license_header }}
+#![cfg(test)]
+
+use crate::{mock::*, Error};
+use frame_support::{assert_noop, assert_ok};
+
+#[test]
+fn basic_works() {
+	new_test_ext().execute_with(|| {
+		assert_ok!({{ pallet.name | title }}::change_value(RuntimeOrigin::signed(1), 9));
+	});
+}
+
+#[test]
+fn too_large_errors() {
+	new_test_ext().execute_with(|| {
+		assert_noop!({{ pallet.name | title }}::change_value(RuntimeOrigin::signed(1), 11), Error::<Test>::TooLarge);
+	});
+}

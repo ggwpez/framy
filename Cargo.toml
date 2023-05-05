@@ -6,3 +6,10 @@ license = "	GPL-3.0-only" # Binary anyway
 description = "Inofficial FRAME cli for pallet and runtime maintenance"
 
 [dependencies]
+convert_case = "0.6.0"
+env_logger = "0.10.0"
+inquire = "0.6.1"
+log = "0.4.17"
+serde = { version = "1.0.162", features = ["derive"] }
+tera = "1.18.1"
+typesafe-builders = { version = "0.3.0", path = "../typesafe-builders/typesafe-builders" }
