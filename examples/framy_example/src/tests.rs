@@ -30,6 +30,9 @@ fn basic_works() {
 #[test]
 fn too_large_errors() {
 	new_test_ext().execute_with(|| {
-		assert_noop!(Framyexample::change_value(RuntimeOrigin::signed(1), 11), Error::<Test>::TooLarge);
+		assert_noop!(
+			Framyexample::change_value(RuntimeOrigin::signed(1), 11),
+			Error::<Test>::TooLarge
+		);
 	});
 }

@@ -20,9 +20,9 @@
 
 pub use pallet::*;
 
+mod benchmarking;
 mod mock;
 mod tests;
-mod benchmarking;
 
 pub mod weights;
 pub use weights::WeightInfo;
@@ -46,13 +46,13 @@ pub mod pallet {
 
 	#[pallet::storage]
 	pub type DummyValue<T> = StorageValue<_, u32>;
-	
+
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		Changed {
 			// You can use named fields here.
-		}
+		},
 	}
 
 	// Errors inform users that something went wrong.
@@ -66,7 +66,7 @@ pub mod pallet {
 		#[pallet::call_index(0)]
 		pub fn change_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
-			
+
 			// The actual logic is in a separate function to ease testing and implementing traits.
 			Self::do_change_value(value).map_err(Into::into)
 		}
@@ -79,11 +79,11 @@ pub mod pallet {
 			DummyValue::<T>::put(value);
 
 			// Emit an event.
-			Self::deposit_event(Event::Changed { });
+			Self::deposit_event(Event::Changed {});
 
 			// Error if `value` is too large and revert the storage changes.
 			ensure!(value < 10, Error::<T>::TooLarge);
-			
+
 			Ok(())
 		}
 	}

@@ -7,54 +7,47 @@ use convert_case::{Case, Casing};
 use inquire::{Confirm, Select, Text};
 use std::path::{Path, PathBuf};
 use tera::Tera;
-use tera_text_filters::{snake_case, camel_case};
+use tera_text_filters::{camel_case, snake_case};
+
+mod templates {
+	include!(concat!(env!("OUT_DIR"), "/codegen.rs"));
+}
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
 	env_logger::init();
 
-	let mut tera = match Tera::new("framy/templates/*.tera") {
-		Ok(t) => t,
-		Err(e) => {
-			unreachable!("Parsing error(s) in static files: {}", e);
-		},
-	};
+	let mut tera = Tera::default();
+	for name in templates::TEMPLATES.keys() {
+		tera.add_raw_template(name, templates::TEMPLATES[name])?;
+		println!("Loaded template: {}", name);
+	}
+
 	tera.register_filter("camel_case", camel_case);
 	tera.register_filter("snake_case", snake_case);
-	
+
 	let (mod_name, pallet_name) = prompt_name()?;
 	let path = prompt_path(&folder_name(&mod_name))?;
 	let options: Vec<&str> = vec!["Parity/Substrate", "None"];
 	let ans = Select::new("Preset:", options).prompt()?;
-	
+
 	let (cargo, pallet) = match ans {
-		"Parity/Substrate" => {
-			(presets::substrate::cargo(), presets::substrate::pallet())
-		},
-		"None" => {
-			(
-				presets::basic::cargo()
-					.author("TODO author".into())
-					.repository("TODO repository".into())
-					.homepage("TODO homepage".into())
-					.license(prompt_license()?),
-				presets::basic::pallet()
-					.license_header("// TODO license_header".into())
-			)
-		},
+		"Parity/Substrate" => (presets::substrate::cargo(), presets::substrate::pallet()),
+		"None" => (
+			presets::basic::cargo()
+				.author("TODO author".into())
+				.repository("TODO repository".into())
+				.homepage("TODO homepage".into())
+				.license(prompt_license()?),
+			presets::basic::pallet().license_header("// TODO license_header".into()),
+		),
 		e => unreachable!("Invalid preset: {}", e),
 	};
 
 	let pallet = pallet.name(pallet_name.clone()).build();
 	let description = Text::new("Description:").prompt()?;
-    let cargo = cargo
-		.description(description)
-		.module(mod_name.clone())
-		.build();
+	let cargo = cargo.description(description).module(mod_name.clone()).build();
 
-	let context = presets::basic::context()
-		.pallet(pallet)
-		.cargo(cargo)
-		.build();
+	let context = presets::basic::context().pallet(pallet).cargo(cargo).build();
 
 	let root_dir = PathBuf::from(path);
 	// check if the directory exists
@@ -113,7 +106,10 @@ fn prompt_name() -> Result<(String, String), Box<dyn std::error::Error>> {
 		}
 	};
 
-	Ok((mod_name.clone(), mod_name.strip_prefix("pallet-").unwrap().to_string().to_case(Case::Camel)))
+	Ok((
+		mod_name.clone(),
+		mod_name.strip_prefix("pallet-").unwrap().to_string().to_case(Case::Camel),
+	))
 }
 
 fn prompt_path(initial: &str) -> Result<PathBuf, Box<dyn std::error::Error>> {
