@@ -11,4 +11,6 @@ cargo install framy
 ```bash
 framy
 ```
-r
+
+
+You can see the output in the [`examples/framy_example`](./examples/framy_example) folder.
