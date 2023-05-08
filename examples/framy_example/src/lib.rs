@@ -1,9 +1,22 @@
-{{ pallet.license_header }}
-#![cfg_attr(not(feature = "std"), no_std)]
+// This file is part of Substrate.
 
-//! pallet_{{ pallet.name }}
-//!
-//! {{ cargo.description }}
+// Copyright (C) Parity Technologies (UK) Ltd.
+// SPDX-License-Identifier: Apache-2.0
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// 	http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#![cfg_attr(not(feature = "std"), no_std)]
+#![doc = include_str!("../README.md")]
 
 pub use pallet::*;
 
@@ -31,32 +44,25 @@ pub mod pallet {
 		type WeightInfo: WeightInfo;
 	}
 
-	{% if pallet.storage.dummy -%}
 	#[pallet::storage]
 	pub type DummyValue<T> = StorageValue<_, u32>;
-	{%- endif %}
 	
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		{%- if pallet.event.dummy %}
 		Changed {
 			// You can use named fields here.
 		}
-		{%- endif %}
 	}
 
 	// Errors inform users that something went wrong.
 	#[pallet::error]
 	pub enum Error<T> {
-		{%- if pallet.error.dummy %}
 		TooLarge, // Errors cannot have fields.
-		{%- endif %}
 	}
 
 	#[pallet::call(weight(<T as Config>::WeightInfo))]
 	impl<T: Config> Pallet<T> {
-		{%- if pallet.call.dummy %}
 		#[pallet::call_index(0)]
 		pub fn change_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
@@ -64,26 +70,19 @@ pub mod pallet {
 			// The actual logic is in a separate function to ease testing and implementing traits.
 			Self::do_change_value(value).map_err(Into::into)
 		}
-		{%- endif %}
 	}
 
 	impl<T: Config> Pallet<T> {
 		/// Logic for call `Self::change_value`.
 		pub(crate) fn do_change_value(value: u32) -> Result<(), Error<T>> {
-			{%- if pallet.storage.dummy %}
 			// Update storage.
 			DummyValue::<T>::put(value);
-			{% endif -%}
 
-			{% if pallet.event.dummy %}
 			// Emit an event.
 			Self::deposit_event(Event::Changed { });
-			{% endif -%}
 
-			{% if pallet.error.dummy %}
 			// Error if `value` is too large and revert the storage changes.
 			ensure!(value < 10, Error::<T>::TooLarge);
-			{%- endif %}
 			
 			Ok(())
 		}

@@ -1,6 +1,6 @@
 use crate::context::*;
 
-/// Basic is used by every preset.
+/// Basic is used by every other preset.
 pub mod basic {
 	use super::*;
 
@@ -18,26 +18,8 @@ pub mod basic {
 			.error(Error { dummy: true })
 	}
 
-	pub fn context() -> GenericContextBuilder<false, false, true, true, true, true> {
+	pub fn context() -> GenericContextBuilder<false, false> {
 		Context::builder()
-			.test(Test { dummy: true })
-			.mock(Mock { dummy: true })
-			.benchmarking(Benchmarking { dummy: true })
-			.weights(Weights { dummy: true })
-	}
-}
-
-/// DotSama is slightly opinionated...
-pub mod dotsama {
-	use super::*;
-
-	pub fn cargo() -> GenericCargoBuilder<false, true, false, false, true, false, true, false> {
-		basic::cargo()
-			.license("Apache-2.0".to_string())
-	}
-
-	pub fn pallet() -> GenericPalletBuilder<false, false, true, true, true, true> {
-		basic::pallet()
 	}
 }
 
@@ -46,14 +28,15 @@ pub mod substrate {
 	use super::*;
 
 	pub fn cargo() -> GenericCargoBuilder<false, true, true, false, true, true, true, true> {
-		dotsama::cargo()
+		basic::cargo()
 			.author("Parity Technologies <admin@parity.io>".to_string())
 			.repository("https://github.com/paritytech/substrate".to_string())
 			.homepage("https://substrate.io".to_string())
+			.license("Apache-2.0".to_string())
 	}
 
 	pub fn pallet() -> GenericPalletBuilder<true, false, true, true, true, true> {
-		dotsama::pallet()
+		basic::pallet()
 			.license_header(include_str!("../templates/HEADER-SUBSTRATE").to_string())
 	}
 }

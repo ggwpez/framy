@@ -6,10 +6,6 @@ use typesafe_builders::prelude::*;
 pub struct Context {
 	pub pallet: Pallet,
 	pub cargo: Cargo,
-	pub test: Test,
-	pub mock: Mock,
-	pub benchmarking: Benchmarking,
-	pub weights: Weights,
 }
 
 #[derive(Serialize, Builder)]
@@ -57,24 +53,4 @@ pub struct Cargo {
 	pub repository: String,
 	pub edition: String,
 	pub homepage: String,
-}
-
-#[derive(Serialize)]
-pub struct Test {
-	pub dummy: bool,
-}
-
-#[derive(Serialize)]
-pub struct Mock {
-	pub dummy: bool,
-}
-
-#[derive(Serialize)]
-pub struct Benchmarking {
-	pub dummy: bool,
-}
-
-#[derive(Serialize)]
-pub struct Weights {
-	pub dummy: bool,
 }
