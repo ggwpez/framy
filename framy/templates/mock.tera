@@ -19,7 +19,7 @@ frame_support::construct_runtime!(
 		UncheckedExtrinsic = UncheckedExtrinsic,
 	{
 		System: frame_system,
-		{{ pallet.name | title }}: crate,
+		{{ pallet.name | camel_case }}: crate,
 	}
 );
 

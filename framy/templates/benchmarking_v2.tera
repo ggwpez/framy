@@ -29,7 +29,7 @@ mod benches {
 	// Implements a test for each benchmark. Execute with:
 	// `cargo test -p pallet-{{ pallet.name }} --features runtime-benchmarks`.
 	impl_benchmark_test_suite!(
-		{{ pallet.name | title}},
+		Pallet,
 		crate::mock::new_test_ext(),
 		crate::mock::Test
 	);
