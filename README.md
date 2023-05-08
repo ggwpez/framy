@@ -8,6 +8,8 @@ cargo install framy
 
 ## Usage
 
+Currently the only thing that `FRAMY` can do, is creating a new pallet. The pallet compiles and is setup with the default dependencies. You can resolve the remaining `TODO`s and use it.
+
 ```bash
 framy
 ```
