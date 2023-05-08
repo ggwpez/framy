@@ -19,7 +19,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let mut tera = Tera::default();
 	for name in templates::TEMPLATES.keys() {
 		tera.add_raw_template(name, templates::TEMPLATES[name])?;
-		println!("Loaded template: {}", name);
 	}
 
 	tera.register_filter("camel_case", camel_case);
