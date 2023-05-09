@@ -5,3 +5,4 @@ members = [
 ]
 default-members = ["framy"]
 resolver = "2"
+readme = "README.md"
