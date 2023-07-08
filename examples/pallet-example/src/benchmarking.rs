@@ -41,6 +41,10 @@ mod benches {
 	}
 
 	// Implements a test for each benchmark. Execute with:
-	// `cargo test -p pallet-framyExample --features runtime-benchmarks`.
-	impl_benchmark_test_suite!(Framyexample, crate::mock::new_test_ext(), crate::mock::Test);
+	// `cargo test -p pallet-example --features runtime-benchmarks`.
+	impl_benchmark_test_suite!(
+		Pallet,
+		crate::mock::new_test_ext(),
+		crate::mock::Test
+	);
 }

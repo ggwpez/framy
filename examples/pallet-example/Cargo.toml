@@ -1,0 +1,48 @@
+[package]
+name = "pallet-example"
+version = "0.1.0"
+description = "Does nothing."
+authors = ["Parity Technologies <admin@parity.io>"]
+homepage = "https://substrate.io"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/paritytech/substrate"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[dependencies]
+codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = [ "derive"] }
+scale-info = { version = "2.0.0", default-features = false, features = ["derive"] }
+
+frame-benchmarking = { version = "4.0.0-dev", default-features = false, optional = true, git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+frame-support = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+frame-system = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+
+[dev-dependencies]
+sp-core = { version = "21.0.0", git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+sp-io = { version = "23.0.0", git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+sp-runtime = { version = "24.0.0", git = "https://github.com/paritytech/substrate", rev = "70c0547f40daa8b550ef1a849514d07c385f963e" }
+
+[features]
+default = ["std"]
+
+std = [
+	"codec/std",
+	"frame-benchmarking?/std",
+	"frame-support/std",
+	"frame-system/std",
+	"scale-info/std",
+	"sp-runtime/std",
+]
+
+runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"frame-support/runtime-benchmarks",
+	"frame-system/runtime-benchmarks",
+	"sp-runtime/runtime-benchmarks",
+]
+
+try-runtime = [
+	"frame-support/try-runtime"
+]
