@@ -5,3 +5,6 @@ members = [
 ]
 default-members = ["framy"]
 resolver = "2"
+
+[workspace.package]
+readme = "README.md"
