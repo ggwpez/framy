@@ -27,7 +27,7 @@ fn main() {
 		);
 	}
 	let map = map.build();
-	let mut file = BufWriter::new(File::create(&out_path).unwrap());
+	let mut file = BufWriter::new(File::create(out_path).unwrap());
 
 	writeln!(
 		&mut file,
