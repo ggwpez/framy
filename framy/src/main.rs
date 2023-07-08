@@ -42,13 +42,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		e => unreachable!("Invalid preset: {}", e),
 	};
 
-	let pallet = pallet.name(pallet_name.clone()).build();
+	let pallet = pallet.name(pallet_name).build();
 	let description = Text::new("Description:").prompt()?;
-	let cargo = cargo.description(description).module(mod_name.clone()).build();
+	let cargo = cargo.description(description).module(mod_name).build();
 
 	let context = presets::basic::context().pallet(pallet).cargo(cargo).build();
 
-	let root_dir = PathBuf::from(path);
+	let root_dir = path;
 	// check if the directory exists
 	if root_dir.exists() {
 		log::warn!("Directory '{}' already exists!", root_dir.display());
@@ -83,7 +83,7 @@ fn render_to_file(
 	context: &Context,
 	file: &Path,
 ) -> Result<(), Box<dyn std::error::Error>> {
-	let rendered = tera.render(template, &tera::Context::from_serialize(&context)?)?;
+	let rendered = tera.render(template, &tera::Context::from_serialize(context)?)?;
 	std::fs::write(file, rendered)?;
 	println!("+ {}", file.display());
 	Ok(())

@@ -3,13 +3,8 @@ name = "framy"
 version = "0.2.2"
 edition = "2021"
 license = "	GPL-3.0-only" # Binary anyway
-description = "Inofficial FRAME cli for pallet and runtime maintenance."
+description = "Inofficial FRAME CLI for Pallet and Runtime scaffolding."
 build = "build.rs"
-
-[[example]]
-crate-type = ["staticlib"]
-name = "framy-example"
-path = "examples/framy_example/"
 
 [dependencies]
 convert_case = "0.6.0"
