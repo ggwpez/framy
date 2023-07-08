@@ -14,7 +14,7 @@
 //!
 //! ### Example
 //!
-//! (Your pallet must have a few tests that cover important user journeys. Use https://crates.io/crates/docify to reuse these as examples).
+//! (Your pallet must have a few tests that cover important user journeys. Use <https://crates.io/crates/docify> to reuse these as examples).
 //!
 //! ## Pallet API
 //!
@@ -75,6 +75,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
+		/// The overarching event type of the runtime.
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
 		/// Weight information for all calls of this pallet.
@@ -87,19 +88,23 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
+		/// The value was changed to the new value.
 		Changed {
-			// You can use named fields here.
+			/// The new value.
+			value: u32,
 		}
 	}
 
 	// Errors inform users that something went wrong.
 	#[pallet::error]
 	pub enum Error<T> {
-		TooLarge, // Errors cannot have fields.
+		/// The value was too large.
+		TooLarge,
 	}
 
 	#[pallet::call(weight(<T as Config>::WeightInfo))]
 	impl<T: Config> Pallet<T> {
+		/// Change the value stored in storage.
 		#[pallet::call_index(0)]
 		pub fn change_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
@@ -116,9 +121,9 @@ pub mod pallet {
 			DummyValue::<T>::put(value);
 
 			// Emit an event.
-			Self::deposit_event(Event::Changed { });
+			Self::deposit_event(Event::Changed { value });
 
-			// Error if `value` is too large and revert the storage changes.
+			// Error if `value` is too large and revert the storage changes plus event emission.
 			ensure!(value < 10, Error::<T>::TooLarge);
 			
 			Ok(())

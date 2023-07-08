@@ -26,6 +26,7 @@ use core::marker::PhantomData;
 
 /// Weight functions needed for `pallet-example`.
 pub trait WeightInfo {
+	/// Weight of the call `change_value()`.
 	fn change_value() -> Weight;
 }
 
