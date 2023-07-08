@@ -53,4 +53,5 @@ pub struct Cargo {
 	pub repository: String,
 	pub edition: String,
 	pub homepage: String,
+	pub substrate_rev: String,
 }
