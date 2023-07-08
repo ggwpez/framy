@@ -13,7 +13,7 @@ fn main() {
 		.map(|res| res.map(|e| e.path()))
 		.collect::<Result<Vec<_>, std::io::Error>>()
 		.unwrap();
-	
+
 	for file in &files {
 		println!("cargo:rerun-if-changed={}", file.display());
 	}
@@ -29,6 +29,10 @@ fn main() {
 	let map = map.build();
 	let mut file = BufWriter::new(File::create(&out_path).unwrap());
 
-	writeln!(&mut file, "pub static TEMPLATES: phf::Map<&'static str, &'static str> = \n{};\n", map)
-		.unwrap();
+	writeln!(
+		&mut file,
+		"pub static TEMPLATES: phf::Map<&'static str, &'static str> = \n{};\n",
+		map
+	)
+	.unwrap();
 }
