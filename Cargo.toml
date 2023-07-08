@@ -1,8 +1,7 @@
 [workspace]
 members = [
 	"framy",
-	"examples/*"
+	"examples/*",
 ]
 default-members = ["framy"]
 resolver = "2"
-readme = "README.md"

@@ -10,6 +10,7 @@ use core::marker::PhantomData;
 
 /// Weight functions needed for `{{ cargo.module }}`.
 pub trait WeightInfo {
+	/// Weight of the call `change_value()`.
 	fn change_value() -> Weight;
 }
 

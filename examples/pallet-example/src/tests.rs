@@ -23,16 +23,13 @@ use frame_support::{assert_noop, assert_ok};
 #[test]
 fn basic_works() {
 	new_test_ext().execute_with(|| {
-		assert_ok!(Framyexample::change_value(RuntimeOrigin::signed(1), 9));
+		assert_ok!(Example::change_value(RuntimeOrigin::signed(1), 9));
 	});
 }
 
 #[test]
 fn too_large_errors() {
 	new_test_ext().execute_with(|| {
-		assert_noop!(
-			Framyexample::change_value(RuntimeOrigin::signed(1), 11),
-			Error::<Test>::TooLarge
-		);
+		assert_noop!(Example::change_value(RuntimeOrigin::signed(1), 11), Error::<Test>::TooLarge);
 	});
 }
