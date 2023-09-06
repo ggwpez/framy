@@ -12,20 +12,20 @@ repository = "{{ cargo.repository }}"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = [ "derive"] }
-scale-info = { version = "2.0.0", default-features = false, features = ["derive"] }
+codec = { package = "parity-scale-codec", version = "3.6.6", default-features = false, features = [ "derive"] }
+scale-info = { version = "2.9.0", default-features = false, features = ["derive"] }
 
-frame-benchmarking = { version = "4.0.0-dev", default-features = false, optional = true, git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
-frame-support = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
-frame-system = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
+frame-benchmarking = { version = "22.0.0", default-features = false, optional = true }
+frame-support = { version = "22.0.0", default-features = false }
+frame-system = { version = "22.0.0", default-features = false }
 
 [dev-dependencies]
-sp-core = { version = "21.0.0", git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
-sp-io = { version = "23.0.0", git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
-sp-runtime = { version = "24.0.0", git = "https://github.com/paritytech/substrate", rev = "{{ cargo.substrate_rev }}" }
+sp-core = { version = "22.0.0" }
+sp-io = { version = "24.0.0" }
+sp-runtime = { version = "25.0.0" }
 
 [features]
-default = ["std"]
+default = [ "std" ]
 
 std = [
 	"codec/std",
