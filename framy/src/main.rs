@@ -73,6 +73,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		render_to_file(&tera, template, &context, &src.join(file))?;
 	}
 
+	println!("Please add the crate to your workspace (if you are using one).")
 	println!("🎉 Try out your pallet with: cd {} && cargo test --all-features", root_dir.display());
 
 	Ok(())
