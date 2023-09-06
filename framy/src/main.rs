@@ -30,7 +30,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let ans = Select::new("Preset:", options).prompt()?;
 
 	let (cargo, pallet) = match ans {
-		"Parity / Polkadot SDK" => (presets::polkadot_sdk::cargo(), presets::polkadot_sdk::pallet()),
+		"Parity / Polkadot SDK" =>
+			(presets::polkadot_sdk::cargo(), presets::polkadot_sdk::pallet()),
 		"None" => (
 			presets::basic::cargo()
 				.author("TODO author".into())
