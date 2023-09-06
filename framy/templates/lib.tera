@@ -1,5 +1,4 @@
 {{ pallet.license_header }}
-
 //! # {{ pallet.name | camel_case }}
 //!
 //! {{ cargo.description }}

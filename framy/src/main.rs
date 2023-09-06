@@ -26,11 +26,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 	let (mod_name, pallet_name) = prompt_name()?;
 	let path = prompt_path(&folder_name(&mod_name))?;
-	let options: Vec<&str> = vec!["Parity/Substrate", "None"];
+	let options: Vec<&str> = vec!["Parity / Polkadot SDK", "None"];
 	let ans = Select::new("Preset:", options).prompt()?;
 
 	let (cargo, pallet) = match ans {
-		"Parity/Substrate" => (presets::substrate::cargo(), presets::substrate::pallet()),
+		"Parity / Polkadot SDK" =>
+			(presets::polkadot_sdk::cargo(), presets::polkadot_sdk::pallet()),
 		"None" => (
 			presets::basic::cargo()
 				.author("TODO author".into())
@@ -56,7 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let src = root_dir.join("src");
 	std::fs::create_dir_all(&src)?;
 
-	let root_files = vec![("Cargo.tera", "Cargo.toml"), ("README.tera", "README.md")];
+	let root_files = vec![("Cargo.tera", "Cargo.toml")];
 	let src_files = vec![
 		("benchmarking_v2.tera", "benchmarking.rs"),
 		("lib.tera", "lib.rs"),
@@ -72,6 +73,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 		render_to_file(&tera, template, &context, &src.join(file))?;
 	}
 
+	println!("Please add the crate to your workspace (if you are using one).");
 	println!("🎉 Try out your pallet with: cd {} && cargo test --all-features", root_dir.display());
 
 	Ok(())
@@ -92,7 +94,9 @@ fn render_to_file(
 fn prompt_name() -> Result<(String, String), Box<dyn std::error::Error>> {
 	let mod_name = loop {
 		let name = Text::new("Module Name:").with_initial_value("pallet-").prompt()?;
-		if name.starts_with("pallet-") {
+		if name == "pallet-test" {
+			println!("The name 'test' collides with the name of the test runtime.");
+		} else if name.starts_with("pallet-") {
 			break name
 		} else {
 			let ans = Confirm::new("Are you sure?")

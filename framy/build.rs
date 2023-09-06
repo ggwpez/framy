@@ -5,6 +5,7 @@ use std::{
 	path::Path,
 };
 
+/// Includes the templates into the binary for location-independent execution.
 fn main() {
 	let out_path = Path::new(&env::var("OUT_DIR").unwrap()).join("codegen.rs");
 	// List all files in templates/
