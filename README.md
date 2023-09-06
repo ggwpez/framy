@@ -2,10 +2,12 @@
 
 Currently the only thing that `FRAMY` can do, is creating a new pallet. The pallet compiles and is setup with the default dependencies plus benchmarking and tests. You are good to go and just have to resolve the remaining `TODO`s.
 
+Note that it will not add the pallet to your workspace; this needs to be done manually.
+
 ## Install
 
 ```bash
-cargo install framy
+cargo install framy -f --locked
 ```
 
 ## Usage
